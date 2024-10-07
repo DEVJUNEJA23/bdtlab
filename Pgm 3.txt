@@ -23,6 +23,14 @@ DESCRIBE ratings;
 -- Task c: List All Users Who Have Rated at Least One Movie
 unique_users = FOREACH (GROUP ratings BY userId) GENERATE group AS userId;
 DUMP unique_users;
+unique_users = FOREACH (GROUP ratings BY userId) GENERATE group AS userId;
+DUMP unique_users;
+
+filtered_user = FILTER ratings BY userId IS NOT NULL;
+unique_users = FOREACH (GROUP filtered_user BY userId) GENERATE group AS userId;
+DUMP unique_users;
+unique_users = FOREACH (GROUP ratings BY userId) GENERATE group AS userId;
+DUMP unique_users;
 
 -- Task d: Find the Count of Movies with Ratings Greater Than 3
 ratings = LOAD '/ratings.csv' USING PigStorage(',') AS (movieId:int, title:chararray, userId:int, rating:float, genreId:int);
